@@ -59,19 +59,25 @@ body {
     justify-content: space-between;
     align-items: center;
     display: flex;
-    margin: 0 30px;
+    margin: 0 20px;
     .logo {
       background-image: url(./images/cameralogo.svg);
       width: 50px;
       height: 45px;
       transition: background-image 0.2s linear;
-      &:hover {
-        background-image: url(./images/cameraskills.svg);
-        width: 50px;
-        height: 50px;
+      &:hover .svg-item {
+        fill: #bdae82;
+        cursor: pointer;
       }
     }
   }
+}
+.soc-link:hover {
+  color: #bdae82;
+}
+.soc-link:hover .svg-item {
+  fill: #bdae82;
+  cursor: pointer;
 }
 .nav-list {
   display: flex;
@@ -92,10 +98,6 @@ body {
   justify-content: center;
   align-items: center;
 }
-button {
-  overflow: hidden;
-  position: relative;
-}
 .button-language {
   background-color: transparent;
   font-weight: bold;
@@ -108,6 +110,8 @@ button {
   font-size: 20px;
   text-align: center;
   cursor: pointer;
+  overflow: hidden;
+  position: relative;
 }
 .divider {
   font-weight: bold;
@@ -227,14 +231,16 @@ button {
 @media screen and (max-width: 480px) {
   .burger-menu {
     padding: 100px 0 0 80px;
-  }
-  .burger-menu li {
-    font-size: 32px;
-    font-weight: 400;
-    line-height: 1.5;
-  }
-  .burger-menu.active {
-    transform: translateX(0);
+
+    & li {
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    &.active {
+      transform: translateX(0);
+    }
   }
 }
 @media screen and (max-width: 768px) {
@@ -253,7 +259,7 @@ button {
 .intro {
   background: url(./images/startpage.jpg) center / cover no-repeat;
   width: 100%;
-  height: 100vh;
+  height: 820px;
 }
 .hero {
   width: 100%;
@@ -381,15 +387,16 @@ button {
   line-height: 80px;
   display: flex;
   position: relative;
-}
-.portfolio-title:before,
-.portfolio-title:after {
-  content: "";
-  color: #bdae82;
-  border-bottom: 2px solid #bdae82;
-  width: 15%;
-  margin: 0 10px;
-  display: inline-block;
+
+  &:before,
+  &:after {
+    content: "";
+    color: inherit;
+    border-bottom: 2px solid inherit;
+    width: 15%;
+    margin: 0 10px;
+    display: inline-block;
+  }
 }
 .portfolio-buttons {
   text-align: center;
@@ -405,7 +412,9 @@ button {
     padding: 7.5px 0;
     text-decoration: none;
     display: inline-block;
-
+    &:nth-child(4) {
+      background-color: #bdae82;
+    }
     .portfolio-btn-text {
       color: #bdae82;
       text-align: center;
@@ -420,9 +429,7 @@ button {
     }
   }
 }
-.portfolio-button:nth-child(4) {
-  background-color: #bdae82;
-}
+
 .section-portfolio
   .portfolio-buttons
   .portfolio-button:nth-child(4)
@@ -528,7 +535,7 @@ button {
   }
   .price-items {
     width: 100%;
-    padding: 60px 0 100px 0;
+    padding: 60px 0px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -536,10 +543,7 @@ button {
     .price-item {
       text-align: center;
       border: 3px solid #bdae82;
-      width: 100%; 
-      &:nth-child(2){
-        margin: 0px 25px;///////
-      }
+      width: 100%;
 
       .price-item-title {
         color: #fff;
@@ -606,7 +610,6 @@ button {
 .contact {
   background: url(./images/contact.jpg) center / cover no-repeat;
   width: 100%;
-  height: 100vh;
 }
 .contact-container {
   width: 100%;
@@ -624,6 +627,14 @@ button {
 form {
   display: flex;
   flex-direction: column;
+}
+//предотвращение перезаписи цвета фона при вводе текста в форму
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: #bdae82 !important;
 }
 #email,
 #phone {
@@ -698,6 +709,9 @@ textarea:focus {
   padding: 50px 20px;
   display: flex;
 }
+.footer-link:hover .copyright-text {
+  color: #bdae82;
+}
 .copyright {
   align-items: center;
   width: 20%;
@@ -747,7 +761,7 @@ textarea:focus {
   }
   .contact-container {
     margin: auto;
-    padding: 100px;
+    padding: 30px;
   }
   .contact-btn {
     display: inline-block;
@@ -757,16 +771,13 @@ textarea:focus {
   }
 }
 @media only screen and (width<=950px) {
-  
   .price-items {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 50px;
   }
   .price-item {
     width: 450px;
-   
   }
 }
 @media only screen and (width<=900px) {
@@ -810,7 +821,7 @@ textarea:focus {
 }
 @media only screen and (width<=767px) {
   .header {
-    padding: 20px 10px 0;
+    padding: 20px 5px 0;
   }
   .hero {
     padding: 170px 50px;
@@ -829,16 +840,12 @@ textarea:focus {
   .section-skills,
   .section-portfolio,
   .section-video,
-  .section-price,
-  .contact {
+  .section-price {
     padding: 60px 10px 0;
   }
   .price-items {
     flex-direction: column;
     align-items: center;
-  }
-  .contact-container {
-    padding: 50px;
   }
   .footer {
     background: #000;
@@ -860,9 +867,7 @@ textarea:focus {
     flex-wrap: wrap;
     align-items: center;
   }
-  .intro {
-    height: 80vh;
-  }
+
   .language-list {
     margin-left: 260px;
   }
@@ -870,14 +875,11 @@ textarea:focus {
     height: 40vh;
   }
   .contact {
-    height: 80vh;
+    height: 70vh;
   }
 }
 
 @media only screen and (width<=530px) {
-  .intro {
-    height: 70vh;
-  }
   .language-list {
     margin-left: 160px;
   }

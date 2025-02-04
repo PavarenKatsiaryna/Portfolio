@@ -20,92 +20,81 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Illumination of the activeBtn - en/ru
   const allButtons = document.querySelectorAll(".button");
-  function changeClassActive(event) {
-    let current = event.target;
-    allButtons.forEach((el) => {
-      if (el.classList.contains("activeBtn")) {
-        el.classList.remove("activeBtn");
-      }
-    });
-    current.classList.add("activeBtn");
-  }
+let lang; 
+const translations = {
+  en: {
+    skills: "Skills",
+    portfolio: "Portfolio",
+    video: "Video",
+    price: "Price",
+    contacts: "Contacts",
+    "hero-title": "Alexa Rise",
+    "hero-text":
+      "Save sincere emotions, romantic feelings and happy moments of life together with professional photographer Alexa Rise",
+    hire: "Hire me",
+  },
+  ru: {
+    skills: "Навыки",
+    portfolio: "Портфолио",
+    video: "Видео",
+    price: "Цены",
+    contacts: "Контакты",
+    "hero-title": "Алекса Райс",
+    "hero-text":
+      "Сохраните искренние эмоции, романтические переживания и счастливые моменты жизни вместе с профессиональным фотографом",
+    hire: "Пригласить",
+  },
+};
+
+// Функция для изменения активного класса
+function changeClassActive(event) {
+  let current = event.target;
+
   allButtons.forEach((el) => {
-    el.addEventListener("click", changeClassActive);
+    if (el.classList.contains("activeBtn")) {
+      el.classList.remove("activeBtn");
+    }
   });
 
-  // Translate page - en/ru
-  let lang;
-  let translations = {
-    en: {
-      skills: "Skills",
-      portfolio: "Portfolio",
-      video: "Video",
-      price: "Price",
-      contacts: "Contacts",
-      "hero-title": "Alexa Rise",
-      "hero-text":
-        "Save sincere emotions, romantic feelings and happy moments of life together with professional photographer Alexa Rise",
-      hire: "Hire me",
-    },
-    ru: {
-      skills: "Навыки",
-      portfolio: "Портфолио",
-      video: "Видео",
-      price: "Цены",
-      contacts: "Контакты",
-      "hero-title": "Алекса Райс",
-      "hero-text":
-        "Сохраните искренние эмоции, романтические переживания и счастливые моменты жизни вместе с профессиональным фотографом",
-      hire: "Пригласить",
-    },
-  };
-  // Выборка всех элементов на странице, которые имеют атрибут data-language
-  const languageButtons = document.querySelectorAll("[data-language]");
-  function getTranslate(event) {
-    // Получает выбранный язык из нажатой кнопки
-    let language = event.target.dataset.language;
-    // Устанавливает текущий язык
-    lang = language;
-    // Сохраняет текущий язык в localStorage для дальнейшего использования
-    localStorage.setItem("lang", lang);
-    // Получает все элементы для перевода
-    const allElements = document.querySelectorAll("[data-translate]");
-    // Обновляет текст элементов на странице
-    allElements.forEach((element) => {
-      element.textContent = translations[language][element.dataset.translate];
-    });
+  current.classList.add("activeBtn");
+}
+
+// Получение языка из localStorage 
+function initializeLanguage() {
+  lang = localStorage.getItem("lang") || "en";
+  const languageButton = document.querySelector(`[data-language="${lang}"]`);
+  if (languageButton) {
+    languageButton.classList.add("activeBtn");
   }
-  // На каждую кнопку добавляется обработчик события click
-  languageButtons.forEach((el) => {
-    el.addEventListener("click", getTranslate);
-  });
+  translatePage(lang);
+}
 
-  // icons-footer
-  // Объект для хранения новых изображений
-  const newImages = {
-    "inst-link": "./images/newImage-instagram.png",
-    "fb-link": "./images/newImage-facebook.png",
-    "tw-link": "./images/newImage-twitter.png",
-    "pinterest-link": "./images/newImage-pinterest.png",
-  };
-  // Получаем все элементы иконок
-  const socLinks = document.querySelectorAll(".soc-link");
-  // Добавляем обработчики событий для смены изображений
-  socLinks.forEach((link) => {
-    const image = link.querySelector("img");
-    // Сохранение оригинального src
-    const originalSrc = image.getAttribute("src");
-    // Смена изображения на новое при наведении
-    link.addEventListener("mouseover", () => {
-      const id = link.id;
-      if (newImages[id]) {
-        image.src = newImages[id];
-      }
-      // Возврат к исходному изображению при уходе мыши
-      link.addEventListener("mouseleave", () => {
-        image.src = originalSrc;
-      });
-    });
+// Функция перевода страницы
+function translatePage(language) {
+  const allElements = document.querySelectorAll("[data-translate]");
+  allElements.forEach((element) => {
+    element.textContent = translations[language][element.dataset.translate];
   });
+}
+
+// Обработчик событий для кнопок выбора языка
+function getTranslate(event) {
+  let language = event.target.dataset.language;
+  lang = language;
+  localStorage.setItem("lang", lang);
+  
+  changeClassActive(event); // Обновить активный класс
+  translatePage(language); // Перевести страницу
+}
+
+// Установка обработчиков событий на кнопки выбора языка
+const languageButtons = document.querySelectorAll("[data-language]");
+languageButtons.forEach((el) => {
+  el.addEventListener("click", getTranslate);
+});
+
+// Инициализация языка при загрузке страницы
+initializeLanguage();
+
 });
 
